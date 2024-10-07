@@ -5,24 +5,21 @@ const fileToRenamePath = path.join(import.meta.dirname, 'files', 'wrongFilename.
 const renamedFilePath = path.join(import.meta.dirname, 'files', 'properFilename.md')
 
 const rename = async () => {
-    try{
-        try{
-            await asyncFs.access(fileToRenamePath)
-        }catch (e){
-            throw new Error('FS operation failed: wrongFilename.txt does not exist');
-        }
-
-        try {
+    try {
+        await Promise.all([
+            asyncFs.access(fileToRenamePath).catch((e) => {
+                throw new Error('FS operation failed: wrongFilename.txt does not exist');
+            }),
             await asyncFs.access(renamedFilePath)
-            throw new Error('FS operation failed: properFilename.md already exists');
-        }catch (e){
-            //если его не существует то ошибка не прокидывается
-            if(e.code !== 'ENOENT'){
-                throw e
-            }
-        }
-        await asyncFs.rename(fileToRenamePath,renamedFilePath)
-    }catch (e){
+                .catch(e => {
+                    //если его не существует то ошибка не прокидывается
+                    if (e.code !== 'ENOENT') {
+                        throw e
+                    }
+                })
+        ])
+        await asyncFs.rename(fileToRenamePath, renamedFilePath)
+    } catch (e) {
         console.error(e)
     }
 
