@@ -10,8 +10,6 @@ const spawnChildProcess = async (args) => {
     const childProcess = spawn('node', [scriptFile, ...args], {stdio: ['pipe','pipe','inherit']});
     process.stdin.pipe(childProcess.stdin)
     process.stdout.pipe(childProcess.stdout)
-
-
 };
 
 // Put your arguments in function call to test this functionality

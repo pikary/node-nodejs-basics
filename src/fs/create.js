@@ -6,7 +6,7 @@ const filePath = path.join(process.cwd(),'src/fs', 'fresh.txt');
 const create = async () => {
     try {
         await asyncFs.access(filePath);
-        console.log('file already exists');
+        throw new Error('FS operation failed'); //если файл существует то ни надо создавать
     } catch (e) {
         if (e.code === 'ENOENT') {
             const content = 'I am fresh and young';

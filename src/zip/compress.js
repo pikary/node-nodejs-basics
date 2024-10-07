@@ -24,7 +24,6 @@ const compress = async () => {
     }catch (e){
         console.error(e)
     }
-
 };
 
 await compress();
