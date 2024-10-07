@@ -1,7 +1,7 @@
 import asyncFs from "fs/promises";
 import path from "path";
 
-const filesDirPath = path.join(process.cwd(), "src/fs/files");
+const filesDirPath = path.join(import.meta.dirname, "files");
 const list = async () => {
     // Write your code here
     try {

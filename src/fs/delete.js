@@ -1,7 +1,7 @@
 import asyncFs from "fs/promises";
 import path from "path";
 
-const fileToDeletePath = path.join(process.cwd(),'src/fs/files/fileToRemove.txt')
+const fileToDeletePath = path.join(import.meta.dirname,'files','fileToRemove.txt')
 
 const remove = async () => {
     try {

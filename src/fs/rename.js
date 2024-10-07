@@ -1,8 +1,8 @@
 import asyncFs from "fs/promises";
 import path from "path";
 
-const fileToRenamePath = path.join(process.cwd(), 'src/fs/files/wrongFilename.txt')
-const renamedFilePath = path.join(process.cwd(), 'src/fs/files/properFilename.md')
+const fileToRenamePath = path.join(import.meta.dirname, 'files', 'wrongFilename.txt')
+const renamedFilePath = path.join(import.meta.dirname, 'files', 'properFilename.md')
 
 const rename = async () => {
     try{

@@ -1,7 +1,7 @@
 import  asyncFs  from 'fs/promises';
 import path from 'path';
 
-const filePath = path.join(process.cwd(),'src/fs', 'fresh.txt');
+const filePath = path.join(import.meta.dirname,'fresh.txt');
 
 const create = async () => {
     try {

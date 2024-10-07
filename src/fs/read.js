@@ -1,7 +1,7 @@
 import asyncFs from "fs/promises";
 import path from "path";
 
-const fileToReadPath = path.join(process.cwd(),'src/fs/files', 'fileToRead.txt')
+const fileToReadPath = path.join(import.meta.dirname,'files', 'fileToRead.txt')
 
 const read = async () => {
     try {
