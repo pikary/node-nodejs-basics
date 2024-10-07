@@ -1,16 +1,23 @@
 import {spawn} from 'child_process';
 import path from "path";
-import {fileURLToPath} from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const scriptFile = path.join(__dirname, 'script.js');
+
+const scriptFile = path.join(import.meta.dirname, 'files', 'script.js');
 
 const spawnChildProcess = async (args) => {
-    const childProcess = spawn('node', [scriptFile, ...args], {stdio: ['pipe','pipe','inherit']});
-    process.stdin.pipe(childProcess.stdin)
-    process.stdout.pipe(childProcess.stdout)
+    const childProcess = spawn('node', [scriptFile, ...args],
+        {
+            stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+        }
+    );
+    // то что залогится в процессе будет передавать в поток write nodejs
+    childProcess.stdout.pipe(process.stdout);
+    // то что мы пишем в cmd передается в инпут стрим процесса
+    process.stdin.pipe(childProcess.stdin);
+    childProcess.on('exit', (code) => {
+        console.log(`Child process exited with code ${code}`);
+    });
 };
 
 // Put your arguments in function call to test this functionality
-spawnChildProcess( [1,2]);
+spawnChildProcess([1, 2]);
